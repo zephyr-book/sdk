@@ -1,3 +1,33 @@
 menu "ZBook Interface - Actuators"
 
+    menu "ZBook LED Actuator"
+        config ZBOOK_LED
+            bool "Enable ZBook LED actuator"
+            default y
+            help
+                Enable the ZBook LED actuator interface.
+
+
+        config ZBOOK_LED_BLINK_DEFAULT_MS
+            int "Default LED blink duration (ms)"
+            default 500
+            help
+                Set the default blink duration for the ZBook LED actuator in milliseconds.
+        
+        config ZBOOK_LED_BLINK_SLOW_MS
+            int "Slow LED blink duration (ms)"
+            default 1000
+            help
+                Set the slow blink duration for the ZBook LED actuator in milliseconds.
+
+        config ZBOOK_LED_BLINK_FAST_MS
+            int "Fast LED blink duration (ms)"
+            default 250
+            help
+                Set the fast blink duration for the ZBook LED actuator in milliseconds.
+    endmenu
 endmenu
+
+module = LED
+module-str = led
+source "subsys/logging/Kconfig.template.log_config"

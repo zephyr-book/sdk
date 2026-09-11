@@ -1,0 +1,44 @@
+/**
+* @file zbook_rp2350b_m33.dts
+* @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
+* @brief Overlay for the Zbook board (standalone, no bootloader).
+* @version 0.1
+* @date 11-09-2026
+*
+* @copyright Copyright (c) Centro de Inovação EDGE
+*
+*/
+
+/ {
+	aliases {
+		zbook-led0 = &led0;
+		zbook-led1 = &led1;
+		zbook-led2 = &led2;
+		zbook-led3 = &led3;
+	};
+
+	gpio_leds {
+		compatible = "gpio-leds";
+
+		led0: led_left {
+			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+			label = "The led at left side of the board";
+		};
+
+		led1: led_center_left {
+			gpios = <&gpio0 25 GPIO_ACTIVE_LOW>;
+			label = "The led at center left side of the board";
+		};
+
+		led2: led_center_right {
+			gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;
+			label = "The led at center right side of the board";
+		};
+
+		led3: led_right {
+			gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+			label = "The led at right side";
+		};
+	};
+
+};

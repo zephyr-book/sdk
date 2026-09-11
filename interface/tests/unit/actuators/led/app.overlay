@@ -1,0 +1,49 @@
+/*
+ * Fake GPIO controller + gpio-leds so zbook_led's led1..led4 aliases
+ * resolve on native_sim, with pin state observable via gpio_emul.
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	/*
+	 * zephyr,deferred-init keeps this controller (and so every led1..led4
+	 * port) "not ready" until a test explicitly calls device_init() on
+	 * it, so the driver's is_devices_ready()/-ENODEV paths are reachable.
+	 */
+	zbook_led_gpio: gpio_emul_0 {
+		compatible = "zephyr,gpio-emul";
+		gpio-controller;
+		#gpio-cells = <2>;
+		ngpios = <4>;
+		status = "okay";
+		zephyr,deferred-init;
+	};
+
+	zbook_leds {
+		compatible = "gpio-leds";
+
+		zbook_led1: led_1 {
+			gpios = <&zbook_led_gpio 0 GPIO_ACTIVE_HIGH>;
+		};
+
+		zbook_led2: led_2 {
+			gpios = <&zbook_led_gpio 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		zbook_led3: led_3 {
+			gpios = <&zbook_led_gpio 2 GPIO_ACTIVE_HIGH>;
+		};
+
+		zbook_led4: led_4 {
+			gpios = <&zbook_led_gpio 3 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	aliases {
+		zbook-led0 = &zbook_led1;
+		zbook-led1 = &zbook_led2;
+		zbook-led2 = &zbook_led3;
+		zbook-led3 = &zbook_led4;
+	};
+};

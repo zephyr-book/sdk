@@ -1,0 +1,7 @@
+tests:
+  interface.actuators.led:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - actuators
+      - led

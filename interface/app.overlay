@@ -1,0 +1,43 @@
+/**
+ * @file app.overlay
+ * @author João Matheus Nascimento Dias (joao.dias@edge.ufal.br)
+ * @brief Overlay for the Zbook board (standalone, no bootloader).
+ * @version 0.1
+ * @date 11-09-2026
+ *
+ * @copyright Copyright (c) Centro de Inovação EDGE
+ *
+ */
+
+/ {
+	aliases {
+		zbook-led0 = &app_led0;
+		zbook-led1 = &app_led1;
+		zbook-led2 = &app_led2;
+		zbook-led3 = &app_led3;
+	};
+
+	gpio_leds {
+		compatible = "gpio-leds";
+
+		app_led0: red {
+			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+			label = "Red led";
+		};
+
+		app_led1: green {
+			gpios = <&gpio0 25 GPIO_ACTIVE_LOW>;
+			label = "Green led";
+		};
+
+		app_led2: blue {
+			gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;
+			label = "Blue led";
+		};
+
+		app_led3: yellow {
+			gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+			label = "Yellow led";
+		};
+	};
+};
