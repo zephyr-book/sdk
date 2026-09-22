@@ -1,0 +1,17 @@
+sample:
+  name: ZBook RGB LED bring-up probe
+  description: >
+    Real-hardware bring-up sample for zbook_led_rgb: cycles each addressable
+    LED individually through red/green/blue/white, then all four together,
+    then a mask pattern (even vs odd LEDs). Meant to be watched, not
+    asserted on -- hence build_only below.
+tests:
+  sample.actuators.zbook_led_rgb_probe:
+    tags:
+      - samples
+      - interface
+      - actuators
+      - led_rgb
+    platform_allow:
+      - zbook/rp2350b/m33
+    build_only: true
