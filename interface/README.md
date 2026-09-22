@@ -47,6 +47,16 @@ Order that keeps every step verifiable before the next:
 2. Devicetree node `zbook_<periph>` (bound under the right controller, e.g.
    `&spi1`, if it's a bus peripheral) — lives in the board/shield overlay,
    not in this repo.
+
+   Exception: a *shared, multi-function* external header pin (the same
+   physical pin usable as GPIO/ADC/PWM/UART-PIO, chosen in software, not by
+   board wiring) can't follow that rule — see `zbook_pwm`
+   (`interface/snippets/zbook-sdk/`, `interface/src/actuators/zbook_pwm.c`)
+   for the pattern: the pin's candidate peripheral nodes live in
+   `interface/`'s own snippet, each behind a dedicated, non-default pinctrl
+   state that nothing applies automatically, claimed per-pin by
+   `zbook_<periph>_init()` at runtime — never merged into the controller's
+   own default state, and never in the board repo.
 3. `src/<category>/zbook_<periph>.c` — implementation, guarded (see below).
 4. Two lines in `Kconfig.<category>`.
 5. `tests/unit/<category>/<periph>/` (see `tests/README.md`) — at minimum

@@ -1,0 +1,75 @@
+/*
+ * interface/'s own devicetree extension, applied via the "zbook-sdk" snippet
+ * (-S zbook-sdk) -- consumers never write devicetree themselves.
+ *
+ * ZBook's external header IOs are multi-function (GPIO/ADC/PWM/UART-PIO on
+ * the same physical pin). &pwm's own "default" pinctrl state must stay
+ * limited to the board's always-on channels (pwm_buzzer/pwm_mosfet, see
+ * zbook_rp2350b_m33_p2-common.dtsi) -- it must never gain a flexible IO's
+ * pin group, or &pwm's normal boot-time init would permanently claim that
+ * pin for PWM in every build, regardless of CONFIG_ZBOOK_PWM.
+ *
+ * Instead, each flexible IO's candidate pin group lives in its own,
+ * separate pinctrl state ("zbook_io") that nothing applies automatically.
+ * zbook_pwm_init() claims its one pin from this state at runtime, via
+ * pinctrl_lookup_state()/pinctrl_configure_pins() (see zbook_pwm.c) -- not
+ * via &pwm's implicit whole-state apply. This is required on this SoC
+ * because its pinctrl driver only reads the first phandle of a pinctrl-N
+ * property, so a "group" cannot simply be appended to &pwm_default itself.
+ *
+ * groupN below and the matching zbook_pwm_channels child must stay in the
+ * same order as "enum zbook_pwm_io" (zbook_pwm.h) -- that positional match
+ * is how zbook_pwm.c ties a channel to its pin, no DT "label" involved.
+ * GPIO39/GPIO46 share PWM slice 11 (channels B/A) -- independent duty
+ * cycles, but always the same frequency as each other.
+ */
+#include <zephyr/dt-bindings/pwm/pwm.h>
+#include <zephyr/dt-bindings/pinctrl/rpi-pico-rp2350b-pinctrl.h>
+
+&pinctrl {
+	pwm_zbook_io: pwm_zbook_io {
+		group1 {
+			pinmux = <PWM_0B_P1>; /* IO01 */
+		};
+		group2 {
+			pinmux = <PWM_11B_P39>; /* IO39 */
+		};
+		group3 {
+			pinmux = <PWM_10B_P45>; /* IO45 */
+		};
+		group4 {
+			pinmux = <PWM_11A_P46>; /* IO46 */
+		};
+	};
+};
+
+&pwm {
+	pinctrl-names = "default", "zbook_io";
+	pinctrl-1 = <&pwm_zbook_io>;
+};
+
+/ {
+	zbook_pwm_channels: zbook-pwm-channels {
+		compatible = "pwm-leds";
+
+		pwm_io01: pwm-io01 {
+			label = "IO01";
+			pwms = <&pwm 1 PWM_USEC(20000) PWM_POLARITY_NORMAL>;
+		};
+
+		pwm_io39: pwm-io39 {
+			label = "IO39";
+			pwms = <&pwm 23 PWM_USEC(20000) PWM_POLARITY_NORMAL>;
+		};
+
+		pwm_io45: pwm-io45 {
+			label = "IO45";
+			pwms = <&pwm 21 PWM_USEC(20000) PWM_POLARITY_NORMAL>;
+		};
+
+		pwm_io46: pwm-io46 {
+			label = "IO46";
+			pwms = <&pwm 22 PWM_USEC(20000) PWM_POLARITY_NORMAL>;
+		};
+	};
+};
