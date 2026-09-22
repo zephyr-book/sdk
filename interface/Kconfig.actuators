@@ -1,3 +1,26 @@
 menu "ZBook Interface - Actuators"
 
+    menu "Zbook PWM Actuator"
+        config ZBOOK_PWM
+            bool "ZBook generic PWM output interface"
+            select PWM
+            select PINCTRL_DYNAMIC if PINCTRL
+            default y
+            help
+                Enable zbook_pwm_init/start/stop/set_cfg/get_cfg, a pure-C
+                passthrough over the Zephyr PWM driver bound to the
+                "zbook_pwm_channels" node (a "pwm-leds" node) shipped by the
+                "zbook-sdk" snippet, each channel addressed by its
+                "enum zbook_pwm_io" value. PINCTRL_DYNAMIC is required so a
+                flexible header IO's pin can be claimed at runtime from its
+                own "zbook_io" pinctrl state (see zbook_pwm.c) instead of
+                &pwm's boot-time default state.
+
+        if ZBOOK_PWM
+            module = ZBOOK_PWM
+            module-str = "zbook pwm"
+            source "subsys/logging/Kconfig.template.log_config"
+        endif # ZBOOK_PWM
+    endmenu
+
 endmenu

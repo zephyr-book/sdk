@@ -1,3 +1,5 @@
 build:
   cmake: interface
   kconfig: interface/Kconfig
+  settings:
+    snippet_root: interface
