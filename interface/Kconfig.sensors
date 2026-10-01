@@ -1,3 +1,15 @@
 menu "ZBook Interface - Sensors"
 
+config ZBOOK_MICROPHONE
+	bool "ZBook microphone sensor interface"
+	select ADC
+	default y
+	help
+	  Enable zbook_microphone_init/read, a pure-C passthrough over the Zephyr ADC
+	  driver bound to the microphone devicetree node.
+
 endmenu
+
+module = MICROPHONE
+module-str = microphone
+source "subsys/logging/Kconfig.template.log_config"

@@ -1,0 +1,18 @@
+sample:
+  name: ZBook microphone sensor
+  description: >
+    Bring-up sample exposing the zbook microphone sensor interface: samples
+    the raw ADC value as fast as possible for a short window and reports
+    min/max/peak-to-peak once a second, for manually validating the
+    microphone on real P2 hardware over the console (stay quiet vs. make
+    noise should visibly change the peak-to-peak spread).
+tests:
+  sample.sensors.zbook_microphone:
+    tags:
+      - samples
+      - interface
+      - sensors
+      - microphone
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true

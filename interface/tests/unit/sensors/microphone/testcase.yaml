@@ -1,0 +1,31 @@
+tests:
+  interface.sensors.microphone:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - microphone
+
+  interface.sensors.microphone.setup_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - microphone
+    extra_dtc_overlay_files:
+      - app.overlay
+      - setup_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DMICROPHONE_TEST_SETUP_FAILURE
+
+  interface.sensors.microphone.read_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - microphone
+    extra_dtc_overlay_files:
+      - app.overlay
+      - read_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DMICROPHONE_TEST_READ_FAILURE
