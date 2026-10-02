@@ -1,0 +1,6 @@
+&i2c0 {
+	zbook_i2c_target: zbook_i2c_target@50 {
+		compatible = "zbook,i2c-loopback-emul";
+		reg = <0x50>;
+	};
+};

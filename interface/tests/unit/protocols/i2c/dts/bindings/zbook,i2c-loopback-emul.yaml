@@ -1,0 +1,5 @@
+description: ZBook I2C loopback emulator (unit test only)
+
+compatible: "zbook,i2c-loopback-emul"
+
+include: i2c-device.yaml

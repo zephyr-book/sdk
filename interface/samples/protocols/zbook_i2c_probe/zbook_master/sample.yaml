@@ -1,0 +1,18 @@
+sample:
+  name: ZBook I2C bus probe (master)
+  description: >
+    Bring-up sample that scans the external GPIO header's I2C bus (H1,
+    I2C_SDA/I2C_SCL) every 2 seconds and reports every address that ACKs.
+    Needs a real I2C target wired to H1 to prove anything -- see
+    samples/protocols/zbook_i2c_probe/nrf52_target/ -- not something
+    twister can assert on its own, hence build_only below.
+tests:
+  sample.protocols.zbook_i2c_probe.master:
+    tags:
+      - samples
+      - interface
+      - protocols
+      - i2c
+    platform_allow:
+      - zbook/rp2350b/m33
+    build_only: true
