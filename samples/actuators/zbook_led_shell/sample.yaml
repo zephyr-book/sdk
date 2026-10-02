@@ -1,0 +1,16 @@
+sample:
+  name: ZBook LED shell
+  description: >
+    Bring-up sample exposing the zbook LED actuator (on/off/blink) as shell
+    commands, for manually validating the onboard LEDs on real P2 hardware
+    over the console.
+tests:
+  sample.actuators.led:
+    tags:
+      - samples
+      - interface
+      - actuators
+      - led
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true
