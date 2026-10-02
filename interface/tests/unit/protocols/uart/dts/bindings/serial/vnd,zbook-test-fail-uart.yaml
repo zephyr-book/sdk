@@ -1,0 +1,9 @@
+description: |
+  Test-only UART stand-in whose init always fails (see fail_uart_init in
+  src/main.c). Exists solely so zbook_uart_init()'s device_init()-failed
+  branch has something to exercise -- no real zbook UART backend fails
+  init, so there is no other way to reach it.
+
+compatible: "vnd,zbook-test-fail-uart"
+
+include: uart-controller.yaml
