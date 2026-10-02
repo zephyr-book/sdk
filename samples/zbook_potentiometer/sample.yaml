@@ -1,0 +1,16 @@
+sample:
+  name: ZBook potentiometer sensor
+  description: >
+    Bring-up sample exposing the zbook potentiometer sensor interface, logging
+    the level as a percentage once a second, for manually validating the
+    potentiometer on real P2 hardware over the console.
+tests:
+  sample.sensors.zbook_potentiometer:
+    tags:
+      - samples
+      - interface
+      - sensors
+      - potentiometer
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true
