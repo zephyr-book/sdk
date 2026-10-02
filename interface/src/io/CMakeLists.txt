@@ -4,6 +4,6 @@
 
 zephyr_library()
 
-if(CONFIG_ZBOOK_INTERFACE_SAMPLE)
-    zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_SAMPLE zbook_sample.c)
+if(CONFIG_ZBOOK_INTERFACE_IO)
+    zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_IO_BTN zbook_btn.c)
 endif()

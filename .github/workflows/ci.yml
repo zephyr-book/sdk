@@ -1,0 +1,137 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) Centro de Inovacao EDGE - 2026
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ZBOOK_BOARD: zbook@p2/rp2350b/m33
+  # Workspace layout (T2 topology, see west.yml): this repo lives at
+  # <workspace>/sdk, west projects land under <workspace>/deps.
+  WORKSPACE: ${{ github.workspace }}/ws
+  SDK_DIR: ${{ github.workspace }}/ws/sdk
+
+jobs:
+  rebase-check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Check the PR is rebased on the base branch
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          base=$(git rev-parse "origin/$BASE_REF")
+          if ! git merge-base --is-ancestor "$base" HEAD; then
+            echo "::error::PR is not rebased on origin/$BASE_REF."
+            echo "Fix: git fetch origin && git rebase origin/$BASE_REF && git push --force-with-lease"
+            exit 1
+          fi
+          echo "PR is up to date with origin/$BASE_REF"
+
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Check formatting
+        run: |
+          clang-format --version
+          files=$(git ls-files '*.c' '*.h' '*.cpp' '*.hpp')
+          if [ -z "$files" ]; then
+            echo "No C/C++ sources to check"
+            exit 0
+          fi
+          echo "$files" | xargs clang-format --dry-run --Werror --style=file
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ws/sdk
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ninja-build gperf device-tree-compiler ccache \
+            gcc-multilib g++-multilib
+
+      - name: Install west
+        run: pip install west
+
+      - name: Initialize workspace
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          west init -l sdk
+          west update --narrow --fetch-opt=--depth=1
+
+      - name: Install Zephyr Python deps
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          pip install -r deps/zephyr/scripts/requirements-base.txt \
+                      -r deps/zephyr/scripts/requirements-build-test.txt \
+                      natsort tabulate
+
+      - name: Cache Zephyr SDK
+        id: sdk-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/zephyr-sdk
+          key: zephyr-sdk-${{ hashFiles('ws/sdk/west.yml') }}
+
+      - name: Install Zephyr SDK (ARM + host tools)
+        if: steps.sdk-cache.outputs.cache-hit != 'true'
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          west sdk install --install-dir ~/zephyr-sdk \
+            --toolchains arm-zephyr-eabi
+
+      - name: Register Zephyr SDK
+        run: |
+          echo "ZEPHYR_SDK_INSTALL_DIR=$HOME/zephyr-sdk" >> "$GITHUB_ENV"
+          echo "ZEPHYR_TOOLCHAIN_VARIANT=zephyr" >> "$GITHUB_ENV"
+
+      - name: Build samples for ZBook
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          west twister -T sdk/samples -p "$ZBOOK_BOARD" \
+            --build-only --inline-logs -v
+
+      - name: Run tests on native_sim
+        working-directory: ${{ env.WORKSPACE }}
+        run: |
+          west twister -T sdk/tests -p native_sim \
+            --inline-logs -v
+
+      - name: Upload twister report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: twister-report
+          path: ws/twister-out/twister.xml
+          if-no-files-found: ignore
