@@ -4,6 +4,6 @@
 
 zephyr_library()
 
-if(CONFIG_ZBOOK_INTERFACE_SAMPLE)
-    zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_SAMPLE zbook_sample.c)
+if(CONFIG_ZBOOK_INTERFACE_SENSORS)
+    zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_LDR zbook_ldr.c)
 endif()

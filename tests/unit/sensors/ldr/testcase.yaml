@@ -1,0 +1,31 @@
+tests:
+  interface.sensors.ldr:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - ldr
+
+  interface.sensors.ldr.setup_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - ldr
+    extra_dtc_overlay_files:
+      - app.overlay
+      - setup_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DLDR_TEST_SETUP_FAILURE
+
+  interface.sensors.ldr.read_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - ldr
+    extra_dtc_overlay_files:
+      - app.overlay
+      - read_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DLDR_TEST_READ_FAILURE
