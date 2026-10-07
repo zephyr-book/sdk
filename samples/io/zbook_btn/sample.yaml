@@ -1,0 +1,17 @@
+sample:
+  name: ZBook button I/O
+  description: >
+    Bring-up sample exposing the zbook button I/O interface, logging
+    press/release/long-press events for every button through a single
+    callback, for manually validating the buttons on real P2 hardware over
+    the console.
+tests:
+  sample.io.zbook_btn:
+    tags:
+      - samples
+      - interface
+      - io
+      - btn
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true

@@ -1,0 +1,7 @@
+tests:
+  interface.io.btn:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - io
+      - btn

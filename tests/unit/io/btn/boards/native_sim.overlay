@@ -1,0 +1,44 @@
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	gpio_emul_btn: gpio_emul_btn {
+		compatible = "zephyr,gpio-emul";
+		gpio-controller;
+		#gpio-cells = <2>;
+		ngpios = <4>;
+		rising-edge;
+		falling-edge;
+	};
+
+	buttons: buttons {
+		compatible = "gpio-keys";
+		debounce-interval-ms = <1>;
+
+		test_btn0: btn_0 {
+			gpios = <&gpio_emul_btn 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_0>;
+		};
+
+		test_btn1: btn_1 {
+			gpios = <&gpio_emul_btn 1 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_1>;
+		};
+
+		test_btn2: btn_2 {
+			gpios = <&gpio_emul_btn 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_2>;
+		};
+
+		test_btn3: btn_3 {
+			gpios = <&gpio_emul_btn 3 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_3>;
+		};
+	};
+
+	aliases {
+		button0 = &test_btn0;
+		button1 = &test_btn1;
+		button2 = &test_btn2;
+		button3 = &test_btn3;
+	};
+};

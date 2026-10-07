@@ -1,0 +1,22 @@
+sample:
+  name: ZBook button shell
+  description: >
+    Bring-up sample exposing the zbook button I/O interface (register/remove
+    press/release/long-press callbacks) as shell commands, for manually
+    validating the buttons on real P2 hardware over the console.
+tests:
+  sample.io.zbook_btn_shell:
+    tags:
+      - samples
+      - interface
+      - io
+      - btn
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true
+    # The zbook board module has a devicetree node with an unregistered
+    # vendor prefix ("edge,gpio-inputs"), which twister's --edtlib-Werror
+    # promotes to a fatal error even though it's harmless. Unrelated to
+    # this sample; belongs to the zephyr-book/zbook board module.
+    extra_args:
+      - EXTRA_GEN_EDT_ARGS=
