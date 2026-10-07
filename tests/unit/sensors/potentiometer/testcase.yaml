@@ -1,0 +1,31 @@
+tests:
+  interface.sensors.potentiometer:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - potentiometer
+
+  interface.sensors.potentiometer.setup_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - potentiometer
+    extra_dtc_overlay_files:
+      - app.overlay
+      - setup_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DPOTENTIOMETER_TEST_SETUP_FAILURE
+
+  interface.sensors.potentiometer.read_failure:
+    platform_allow: native_sim
+    tags:
+      - interface
+      - sensors
+      - potentiometer
+    extra_dtc_overlay_files:
+      - app.overlay
+      - read_failure.overlay
+    extra_args:
+      - EXTRA_CFLAGS=-DPOTENTIOMETER_TEST_READ_FAILURE

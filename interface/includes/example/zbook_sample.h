@@ -10,7 +10,7 @@
  *
  *****************************************************************/
 
- #ifndef ZBOOK_SAMPLE_H
- #define ZBOOK_SAMPLE_H
+#ifndef ZBOOK_SAMPLE_H
+#define ZBOOK_SAMPLE_H
 
- #endif /* ZBOOK_SAMPLE_H */
+#endif /* ZBOOK_SAMPLE_H */

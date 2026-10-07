@@ -1,0 +1,10 @@
+/*
+ * Layered on top of app.overlay for the interface.sensors.potentiometer.setup_failure
+ * scenario. Repoints potentiometer at ADC_REF_EXTERNAL0, whose reference voltage
+ * adc_emul defaults to 0mV (app.overlay only sets ref-internal-mv), so
+ * adc_channel_setup() genuinely fails with -ENOTSUP.
+ */
+
+&potentiometer {
+	zephyr,reference = "ADC_REF_EXTERNAL0";
+};
