@@ -2,5 +2,14 @@
 * interface/'s own devicetree extension, applied via the "zbook-sdk" snippet
 * (-S zbook-sdk)
 */
+&pio0 {
+	status = "okay";
+};
 
-#include <zephyr/dt-bindings/pinctrl/rpi-pico-rp2350b-pinctrl.h>
+&pio1 {
+	status = "okay";
+};
+
+&pio2 {
+	status = "okay";
+};

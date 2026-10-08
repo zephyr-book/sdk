@@ -1,0 +1,12 @@
+tests:
+  interface.protocols.uart:
+    tags:
+      - interface
+      - protocols
+      - uart
+    platform_allow:
+      - native_sim
+    harness: ztest
+    extra_configs:
+      - CONFIG_COVERAGE=y
+      - CONFIG_COVERAGE_DUMP=y

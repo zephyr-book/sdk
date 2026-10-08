@@ -1,0 +1,13 @@
+/*
+ * zbook_uart picks a PIO block per pin window (GPIO_BASE 0 for pins 0-31,
+ * 16 for pins 32-47). The board only enables pio1 (ws2812), so enable the
+ * remaining blocks for the UART channels.
+ */
+
+&pio0 {
+	status = "okay";
+};
+
+&pio2 {
+	status = "okay";
+};

@@ -1,0 +1,19 @@
+description: |
+  Tags a zephyr,uart-emul stand-in with the TX/RX GPIO pair it represents,
+  so zbook_uart_init() can look it up by pin instead of a fixed devicetree
+  instance -- exists purely for native_sim unit tests, which have no PIO to
+  bit-bang real GPIOs with.
+
+compatible: "vnd,zbook-uart-emul"
+
+include: "zephyr,uart-emul.yaml"
+
+properties:
+  zbook,tx-pin:
+    type: int
+    required: true
+    description: GPIO number this channel stands in for as TX.
+  zbook,rx-pin:
+    type: int
+    required: true
+    description: GPIO number this channel stands in for as RX.

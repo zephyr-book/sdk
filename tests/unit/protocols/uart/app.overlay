@@ -1,0 +1,43 @@
+/*
+* Stand-in for real PIO hardware -- native_sim has no PIO, so zbook_uart.c
+* is exercised against zephyr,uart-emul channels tagged with the TX/RX pin
+* pair they represent (vnd,zbook-uart-emul), looked up by zbook_uart_init()
+* instead of a fixed devicetree instance. Same zephyr,deferred-init
+* contract, loopback wired so writes come straight back out on reads.
+*/
+/ {
+	zbook-uart-bus {
+		uart_emul_a: uart_emul_a {
+			compatible = "vnd,zbook-uart-emul", "zephyr,uart-emul";
+			status = "okay";
+			zephyr,deferred-init;
+			current-speed = <115200>;
+			loopback;
+			zbook,tx-pin = <45>;
+			zbook,rx-pin = <46>;
+		};
+
+		uart_emul_b: uart_emul_b {
+			compatible = "vnd,zbook-uart-emul", "zephyr,uart-emul";
+			status = "okay";
+			zephyr,deferred-init;
+			current-speed = <9600>;
+			loopback;
+			zbook,tx-pin = <1>;
+			zbook,rx-pin = <39>;
+		};
+
+		/*
+		* Test-only 3rd channel whose init always fails (see main.c's
+		* fail_uart_init) -- exercises zbook_uart_init()'s
+		* device_init()-failed branch, which no real backend hits.
+		*/
+		uart_fail_c {
+			compatible = "vnd,zbook-uart-emul", "vnd,zbook-test-fail-uart";
+			status = "okay";
+			zephyr,deferred-init;
+			zbook,tx-pin = <98>;
+			zbook,rx-pin = <99>;
+		};
+	};
+};
