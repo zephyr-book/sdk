@@ -1,7 +1,8 @@
 # West/Zephyr workspace artifacts
 /build/
 /build-*/
-/twister-out/
+/build_*/
+/twister-out*/
 /.west/
 /deps/
 
