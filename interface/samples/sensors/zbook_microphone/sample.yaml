@@ -1,0 +1,15 @@
+sample:
+  name: ZBook microphone sensor
+  description: >
+    Reads the ZBook microphone through the zbook_microphone interface and
+    logs the min/max/peak-to-peak ADC values of each sampling window.
+tests:
+  sample.sensors.zbook_microphone:
+    tags:
+      - samples
+      - interface
+      - sensors
+      - microphone
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true

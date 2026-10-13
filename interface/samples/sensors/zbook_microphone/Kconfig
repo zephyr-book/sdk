@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE - 2026
+
+mainmenu "ZBook microphone sample"
+
+config APP_SAMPLE_WINDOW_MS
+	int "Sampling window (ms)"
+	default 200
+	range 1 10000
+	help
+	  Duration of each burst of ADC reads used to compute the
+	  min/max/peak-to-peak values.
+
+config APP_REPORT_INTERVAL_MS
+	int "Interval between reports (ms)"
+	default 1000
+	range 0 60000
+	help
+	  Time to sleep after each sampling window before starting the next one.
+
+source "Kconfig.zephyr"
