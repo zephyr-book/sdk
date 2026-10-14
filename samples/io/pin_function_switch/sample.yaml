@@ -1,0 +1,10 @@
+sample:
+  name: Zbook runtime pin function switch
+  description: Moves one header pin between GPIO, PWM and ADC at runtime
+tests:
+  sample.io.pin_function_switch:
+    build_only: true
+    platform_allow:
+      - zbook/rp2350b/m33
+      - zbook@p2/rp2350b/m33
+    tags: io
