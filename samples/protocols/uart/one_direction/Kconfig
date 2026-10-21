@@ -1,0 +1,14 @@
+mainmenu "ZBook UART one-direction sample"
+
+config ZBOOK_UART_SAMPLE_ONE_DIRECTION_IS_TX
+    bool "ZBook UART sample: one-direction"
+    default y
+    help
+      This sample demonstrates the use of the ZBook UART protocol in a one-direction
+      communication scenario. It configures the UART interface for transmission only,
+      allowing data to be sent from the device to a connected receiver. The sample
+      showcases the initialization, configuration, and data transmission capabilities
+      of the ZBook UART protocol, providing a practical example for developers to
+      understand and implement one-directional UART communication in their applications.
+
+source "Kconfig.zephyr"

@@ -6,4 +6,19 @@ config ZBOOK_INTERFACE_PROTOCOLS
     help
       Enable the ZBook Interface Protocols module.
 
+config ZBOOK_INTERFACE_PROTOCOLS_UART
+    bool "Enable ZBook Interface Protocols - UART"
+    default y
+    depends on ZBOOK_INTERFACE_PROTOCOLS
+    help
+      Enable the ZBook Interface Protocols - UART module.
+
+if ZBOOK_INTERFACE_PROTOCOLS_UART
+
+module = ZBOOK_INTERFACE_PROTOCOLS_UART
+module-str = zbook uart
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # ZBOOK_INTERFACE_PROTOCOLS_UART
+
 endmenu
