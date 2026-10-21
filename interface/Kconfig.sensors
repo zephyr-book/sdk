@@ -6,4 +6,18 @@ config ZBOOK_INTERFACE_SENSORS
     help
       Enable the ZBook Interface Sensors module.
 
+
+config ZBOOK_INTERFACE_SENSORS_POTENTIOMETER
+	bool "ZBook potentiometer sensor interface"
+  depends on ZBOOK_INTERFACE_SENSORS
+	select ADC
+  default y
+	help
+	  Enable zbook_potentiometer_init/read, a pure-C passthrough over the Zephyr ADC
+	  driver bound to the potentiometer devicetree node.
+
 endmenu
+
+module = POTENTIOMETER
+module-str = potentiometer
+source "subsys/logging/Kconfig.template.log_config"

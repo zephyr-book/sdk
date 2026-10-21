@@ -1,0 +1,10 @@
+/*
+ * Layered on top of app.overlay for the interface.sensors.potentiometer.read_failure
+ * scenario. Repoints potentiometer at channel 5, past adc0's 2-channel range, so
+ * adc_read() itself rejects the sequence (adc_emul_start_read's channel
+ * mask check), regardless of whether adc_channel_setup() ever succeeded.
+ */
+
+&potentiometer {
+	reg = <5>;
+};
