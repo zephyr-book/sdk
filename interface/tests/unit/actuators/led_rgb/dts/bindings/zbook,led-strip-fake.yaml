@@ -1,0 +1,5 @@
+description: ZBook fake LED strip driver (unit test only)
+
+compatible: "zbook,led-strip-fake"
+
+include: [base.yaml, led-strip.yaml]

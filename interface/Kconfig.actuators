@@ -1,9 +1,27 @@
 menu "ZBook Interface - Actuators"
 
 config ZBOOK_INTERFACE_ACTUATORS
-    bool "Enable ZBook Interface Actuators"
-    default n
-    help
-      Enable the ZBook Interface Actuators module.
+	bool "Enable ZBook Interface Actuators"
+	default n
+	help
+	  Enable the ZBook Interface Actuators module.
+
+menu "Zbook RGB LED Actuator"
+	depends on ZBOOK_INTERFACE_ACTUATORS
+	config ZBOOK_INTERFACE_ACTUATORS_LED_RGB
+		bool "ZBook RGB LED actuator interface"
+		select LED_STRIP
+		default y
+		help
+			Enable the ZBook addressable RGB LED actuator interface, a thin
+			wrapper over Zephyr's led_strip API bound to the "led-strip"
+			devicetree alias (the on-board WS2812-compatible LED chain).
+
+	if ZBOOK_INTERFACE_ACTUATORS_LED_RGB
+		module = ZBOOK_LED_RGB
+		module-str = "zbook led rgb"
+		source "subsys/logging/Kconfig.template.log_config"
+	endif # ZBOOK_INTERFACE_ACTUATORS_LED_RGB
+endmenu
 
 endmenu

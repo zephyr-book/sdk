@@ -1,0 +1,29 @@
+/*
+ * Fake LED strip node so zbook_led_rgb's "led-strip" alias resolves on
+ * native_sim, bound to a hand-written fake driver (src/
+ * zbook_led_rgb_fake_strip.c) instead of a real WS2812 backend -- no
+ * WS2812/PIO peripheral exists to emulate on native_sim, so the fake driver
+ * just captures whatever led_strip_update_rgb() sends it for a test to
+ * inspect afterward.
+ */
+
+#include <zephyr/dt-bindings/led/led.h>
+
+/ {
+	/*
+	 * zephyr,deferred-init keeps this "not ready" until a test explicitly
+	 * calls device_init() on it, so zbook_led_rgb_init()'s -ENODEV path
+	 * is reachable.
+	 */
+	zbook_led_rgb_fake: led_strip_fake {
+		compatible = "zbook,led-strip-fake";
+		chain-length = <4>;
+		color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
+		status = "okay";
+		zephyr,deferred-init;
+	};
+
+	aliases {
+		led-strip = &zbook_led_rgb_fake;
+	};
+};
