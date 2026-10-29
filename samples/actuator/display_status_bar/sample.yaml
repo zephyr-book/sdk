@@ -1,0 +1,15 @@
+sample:
+  name: ZBook Display status bar sample
+  description: Cycles the status bar icons (Wi-Fi levels, Bluetooth, MicroSD, error) and a menu with cursor and checkboxes.
+common:
+  tags:
+    - interface
+    - actuator
+    - display
+  platform_allow:
+    - zbook@p2/rp2350b/m33
+  integration_platforms:
+    - zbook@p2/rp2350b/m33
+tests:
+  sample.interface.actuator.display_status_bar:
+    build_only: true

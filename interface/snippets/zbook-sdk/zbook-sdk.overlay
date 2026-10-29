@@ -1,6 +1,0 @@
-/*
-* interface/'s own devicetree extension, applied via the "zbook-sdk" snippet
-* (-S zbook-sdk)
-*/
-
-#include <zephyr/dt-bindings/pinctrl/rpi-pico-rp2350b-pinctrl.h>

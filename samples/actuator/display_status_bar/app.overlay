@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) Centro de Inovacao EDGE - 2026
+ *
+ * The SSD1306 takes 400 kHz, which cuts a full frame from ~100 ms to ~25 ms, so the
+ * screen no longer visibly paints from top to bottom on every step.
+ */
+
+#include <zephyr/dt-bindings/i2c/i2c.h>
+
+/* The deps/display driver only picks its I2C transport from the display_i2c label. */
+display_i2c: &oled {};
+
+&i2c0 {
+	clock-frequency = <I2C_BITRATE_FAST>;
+};

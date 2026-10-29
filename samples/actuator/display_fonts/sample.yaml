@@ -1,0 +1,15 @@
+sample:
+  name: ZBook Display fonts sample
+  description: Shows the ZBook logo, then prints text with every font size and scale of the ZBook OLED display.
+common:
+  tags:
+    - interface
+    - actuator
+    - display
+  platform_allow:
+    - zbook@p2/rp2350b/m33
+  integration_platforms:
+    - zbook@p2/rp2350b/m33
+tests:
+  sample.interface.actuator.display_fonts:
+    build_only: true
