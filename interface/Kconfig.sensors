@@ -6,4 +6,22 @@ config ZBOOK_INTERFACE_SENSORS
     help
       Enable the ZBook Interface Sensors module.
 
+    menu "ZBook LDR Sensor"
+        depends on ZBOOK_INTERFACE_SENSORS
+
+        config ZBOOK_INTERFACE_SENSORS_LDR
+            bool "Enable ZBook LDR sensor"
+            default y
+            select ADC
+            depends on ZBOOK_INTERFACE_SENSORS
+            help
+                Enable zbook_ldr_init/read, a pure-C passthrough over the Zephyr ADC
+                driver bound to the ldr_adc devicetree node.
+    endmenu
 endmenu
+
+if ZBOOK_INTERFACE_SENSORS_LDR
+    module = LDR
+    module-str = ldr
+    source "subsys/logging/Kconfig.template.log_config"
+endif

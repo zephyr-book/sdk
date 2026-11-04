@@ -1,0 +1,16 @@
+sample:
+  name: ZBook LDR sensor
+  description: >
+    Bring-up sample exposing the zbook LDR sensor interface, logging the
+    light level as a percentage once a second, for manually validating the
+    LDR on real P2 hardware over the console.
+tests:
+  sample.sensors.zbook_ldr:
+    tags:
+      - samples
+      - interface
+      - sensors
+      - ldr
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true
