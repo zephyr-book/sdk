@@ -14,4 +14,6 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 
 project(zbook_gpio_shell)
 
-target_sources(app PRIVATE src/main.c)
+# zbook_pin.c links every backend: PWM/ADC/UART come from the mocks until
+# their real backends land.
+target_sources(app PRIVATE src/main.c ../mocks/zbook_io_mocks.c)
