@@ -98,6 +98,14 @@ enum zbook_pin_header_pwm_polarity {
 };
 
 /**
+ * @brief Edge callback of a GPIO input header pin.
+ *
+ * @param pin Header pin that saw the edge.
+ * @param user_data Value given in struct zbook_pin_cfg_gpio.
+ */
+typedef void (*zbook_pin_gpio_cb_t)(enum zbook_pin_header pin, void *user_data);
+
+/**
  * @brief Configuration structure for the Zbook header pins.
  *
  */
@@ -105,10 +113,13 @@ struct zbook_pin_cfg_gpio {
 	enum zbook_pin_header_direction direction; /**< Zbook header pin direction */
 	enum zbook_pin_header_pull pull;           /**< Zbook header pin pull configuration */
 	enum zbook_pin_header_state state;         /**< Zbook header pin state */
+	enum zbook_pin_header_interrupt interrupt; /**< Edge that fires callback (inputs only) */
+	zbook_pin_gpio_cb_t callback;              /**< Required when interrupt != NONE */
+	void *user_data;                           /**< Passed through to callback */
 };
 
 /**
- * @brief
+ * @brief Configuration structure for the Zbook header pin UART.
  *
  */
 struct zbook_pin_cfg_uart {
