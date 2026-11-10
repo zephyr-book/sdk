@@ -77,6 +77,8 @@ static inline void mock_release(struct zbook_pin *pin)
 
 /**< GPIO */
 
+#ifndef CONFIG_ZBOOK_INTERFACE_IO_GPIO
+
 int zbook_io_gpio_init(struct zbook_pin *pin, const struct zbook_pin_header_config *cfg)
 {
 	if (pin == NULL || cfg == NULL) {
@@ -133,6 +135,8 @@ int zbook_io_gpio_read(struct zbook_pin *pin, void *buf, size_t len)
 
 	return 0;
 }
+
+#endif /* CONFIG_ZBOOK_INTERFACE_IO_GPIO */
 
 /**< PWM */
 
