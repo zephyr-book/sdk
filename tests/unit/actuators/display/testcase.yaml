@@ -1,0 +1,11 @@
+common:
+  tags:
+    - interface
+    - actuator
+    - display
+  platform_allow:
+    - native_sim
+  integration_platforms:
+    - native_sim
+tests:
+  interface.actuator.display: {}

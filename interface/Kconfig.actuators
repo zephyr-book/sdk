@@ -1,10 +1,25 @@
 menu "ZBook Interface - Actuators"
 
-config ZBOOK_INTERFACE_ACTUATORS
-    bool "Enable ZBook Interface Actuators"
+  config ZBOOK_INTERFACE_ACTUATORS
+      bool "Enable ZBook Interface Actuators"
+      default n
+      help
+        Enable the ZBook Interface Actuators module.
+
+config ZBOOK_INTERFACE_ACTUATORS_DISPLAY
+    bool "Enable ZBook Interface Display"
     default n
+    depends on ZBOOK_INTERFACE_ACTUATORS
+    select OLED_DISPLAY
+    select OLED_FONTS
     help
-      Enable the ZBook Interface Actuators module.
+        Enable the ZBook Interface Display module. Wraps the OLED SH1106
+        driver (deps/display) and the OLED mono fonts module. The transport
+        (OLED_DISPLAY_SPI, OLED_DISPLAY_I2C or DISPLAY_VIRTUAL) is selected
+        in the "OLED SH1106 Display" menu. The driver defaults to SPI, so
+        on the ZBook P2 the application builds with the zbook-display
+        snippet (-S zbook-display), which sets CONFIG_OLED_DISPLAY_I2C=y and
+        labels the OLED node display_i2c.
 
     menu "ZBook LED Actuator"
         depends on ZBOOK_INTERFACE_ACTUATORS
@@ -37,6 +52,28 @@ config ZBOOK_INTERFACE_ACTUATORS
             help
                 Set the fast blink duration for the ZBook LED actuator in milliseconds.
     endmenu
+
+    menu "ZBook Interface - Display"
+        depends on ZBOOK_INTERFACE_ACTUATORS_DISPLAY
+
+        config ZBOOK_INTERFACE_DISPLAY_DCDC
+            bool "Enable the display internal DC-DC"
+            default y
+            help
+            Value passed to display_init() by zbook_display_init(). Enable it
+            when the display panel has no external VPP supply and depends on
+            the SH1106 internal DC-DC pump.
+
+        config ZBOOK_INTERFACE_DISPLAY_INIT_CONTRAST
+            int "Display contrast applied on init"
+            default 128
+            range 0 255
+            depends on !DISPLAY_VIRTUAL
+            help
+            Contrast applied by zbook_display_init() right after the driver
+            is initialized. 128 matches the driver default.
+  endmenu
+
 endmenu
 
 if ZBOOK_INTERFACE_ACTUATORS_LED

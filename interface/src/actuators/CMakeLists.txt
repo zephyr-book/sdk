@@ -6,4 +6,5 @@ zephyr_library()
 
 if (CONFIG_ZBOOK_INTERFACE_ACTUATORS)
     zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_ACTUATORS_LED zbook_led.c)
+    zephyr_library_sources_ifdef(CONFIG_ZBOOK_INTERFACE_ACTUATORS_DISPLAY zbook_display.c)
 endif()

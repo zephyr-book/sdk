@@ -1,0 +1,8 @@
+/*
+ * Copyright (c) Centro de Inovacao EDGE - 2026
+ *
+ * The deps/display driver only picks its I2C transport from the display_i2c label, which the
+ * board does not set on the OLED.
+ */
+
+display_i2c: &oled {};

@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE 2026
+
+name: zbook-display
+append:
+  EXTRA_DTC_OVERLAY_FILE: zbook-display.overlay
+  EXTRA_CONF_FILE: zbook-display.conf
