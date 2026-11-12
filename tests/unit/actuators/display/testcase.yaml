@@ -1,0 +1,14 @@
+common:
+  tags:
+    - interface
+    - actuator
+    - display
+  platform_allow:
+    - native_sim
+  integration_platforms:
+    - native_sim
+tests:
+  interface.actuator.display: {}
+  interface.actuator.display.no_status_bar:
+    extra_args:
+      - ZBOOK_TEST_STATUS_BAR=OFF

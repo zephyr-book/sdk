@@ -62,5 +62,15 @@ manifest:
                   remote: zephyr-book
                   revision: main
 
+                - name: oled-mono-fonts
+                  url: https://github.com/edgebr/oled-mono-fonts
+                  revision: zephyr
+
+                - name: oled-sh1106-zephyr
+                  url: https://github.com/edgebr/oled-sh1106-zephyr
+                  revision: zephyr
+                  clone-depth: 1
+                  path: deps/display
+
         self:
                 path: sdk

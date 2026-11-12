@@ -1,0 +1,15 @@
+sample:
+  name: ZBook Display sample
+  description: Shows the ZBook logo, then draws shapes and text on the ZBook OLED display.
+common:
+  tags:
+    - interface
+    - actuator
+    - display
+  platform_allow:
+    - zbook@p2/rp2350b/m33
+  integration_platforms:
+    - zbook@p2/rp2350b/m33
+tests:
+  sample.interface.actuator.display:
+    build_only: true
