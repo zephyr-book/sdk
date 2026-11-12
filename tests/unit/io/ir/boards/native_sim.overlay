@@ -1,0 +1,47 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright (c) Centro de Inovacao EDGE 2026
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	gpio_emul_ir_tx: gpio_emul_ir_tx {
+		compatible = "zephyr,gpio-emul";
+		gpio-controller;
+		#gpio-cells = <2>;
+		ngpios = <1>;
+		status = "okay";
+		zephyr,deferred-init;
+	};
+
+	gpio_emul_ir_rx: gpio_emul_ir_rx {
+		compatible = "zephyr,gpio-emul";
+		gpio-controller;
+		#gpio-cells = <2>;
+		ngpios = <1>;
+		rising-edge;
+		falling-edge;
+		status = "okay";
+		zephyr,deferred-init;
+	};
+
+	ir_actuators {
+		compatible = "gpio-leds";
+
+		ir_emitter: ir_emitter {
+			gpios = <&gpio_emul_ir_tx 0 GPIO_ACTIVE_HIGH>;
+			label = "IR Emitter";
+		};
+	};
+
+	ir_sensors {
+		compatible = "edge,gpio-inputs";
+
+		ir_receiver: ir-receiver {
+			gpios = <&gpio_emul_ir_rx 0 GPIO_ACTIVE_HIGH>;
+			label = "IR Receiver";
+		};
+	};
+};

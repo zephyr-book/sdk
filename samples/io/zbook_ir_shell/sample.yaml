@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE 2026
+
+sample:
+  name: ZBook IR shell
+  description: >
+    Exposes the zbook IR I/O interface as shell commands: drive the IR
+    emitter (on/off/toggle/timed pulse), read the IR receiver and the
+    emitter state, and log receiver DETECTED/LOST events on demand.
+tests:
+  sample.io.zbook_ir_shell:
+    tags:
+      - samples
+      - interface
+      - io
+      - ir
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true

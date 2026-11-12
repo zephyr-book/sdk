@@ -1,0 +1,13 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright (c) Centro de Inovacao EDGE 2026
+ */
+
+&ir_emitter {
+	gpios = <&gpio_emul_ir_tx 0 GPIO_ACTIVE_LOW>;
+};
+
+&ir_receiver {
+	gpios = <&gpio_emul_ir_rx 0 GPIO_ACTIVE_LOW>;
+};

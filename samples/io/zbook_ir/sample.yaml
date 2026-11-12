@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE 2026
+
+sample:
+  name: ZBook IR I/O
+  description: >
+    Reflective IR test for the zbook IR I/O interface: periodically pulses
+    the onboard IR emitter and logs every DETECTED/LOST event of the IR
+    receiver, so holding a surface over the emitter/receiver pair shows
+    whether the reflected pulses are being seen.
+tests:
+  sample.io.zbook_ir:
+    tags:
+      - samples
+      - interface
+      - io
+      - ir
+    platform_allow:
+      - zbook@p2/rp2350b/m33
+    build_only: true

@@ -66,6 +66,38 @@ menu "ZBook Interface - I/O"
 
   endmenu
 
+  menu "ZBook Interface - IR"
+    depends on ZBOOK_INTERFACE_IO
+
+    config ZBOOK_INTERFACE_IO_IR
+      bool "Enable ZBook Interface IR"
+      default y
+      depends on ZBOOK_INTERFACE_IO
+      depends on $(dt_nodelabel_enabled,ir_emitter) && $(dt_nodelabel_enabled,ir_receiver)
+      select GPIO
+      help
+        Enable the ZBook IR interface: the onboard IR emitter as an output and
+        the IR phototransistor receiver as an input with event callbacks.
+
+    config ZBOOK_INTERFACE_IO_IR_PULSE_MAX_MS
+      int "Maximum IR emitter pulse duration in milliseconds"
+      default 10000
+      range 1 3600000
+      depends on ZBOOK_INTERFACE_IO_IR
+      help
+        Longest duration, in milliseconds, accepted by zbook_ir_emitter_pulse().
+
+    config ZBOOK_INTERFACE_IO_IR_SETTLE_MS
+      int "IR receiver settle time in milliseconds"
+      default 5
+      range 0 1000
+      depends on ZBOOK_INTERFACE_IO_IR
+      help
+        Time the receiver level must stay stable before an event is reported,
+        filtering the slow RC edges of the phototransistor and ambient flicker.
+
+  endmenu
+
 endmenu
 
 if ZBOOK_INTERFACE_IO_PINS
@@ -77,5 +109,11 @@ endif
 if ZBOOK_INTERFACE_IO_BTN
 	module = BTN
 	module-str = btn
+	source "subsys/logging/Kconfig.template.log_config"
+endif
+
+if ZBOOK_INTERFACE_IO_IR
+	module = ZBOOK_INTERFACE_IO_IR
+	module-str = zbook ir
 	source "subsys/logging/Kconfig.template.log_config"
 endif

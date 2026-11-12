@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE 2026
+
+mainmenu "ZBook IR sample"
+
+config SAMPLE_IR_PULSE_PERIOD_MS
+	int "Interval between IR emitter pulses in milliseconds"
+	default 1000
+	range 2 3600000
+	help
+	  How often the sample fires a pulse on the IR emitter.
+
+config SAMPLE_IR_PULSE_MS
+	int "IR emitter pulse duration in milliseconds"
+	default 200
+	range 1 ZBOOK_INTERFACE_IO_IR_PULSE_MAX_MS
+	help
+	  How long each IR emitter pulse lasts. Must be shorter than
+	  SAMPLE_IR_PULSE_PERIOD_MS and not above
+	  ZBOOK_INTERFACE_IO_IR_PULSE_MAX_MS.
+
+source "Kconfig.zephyr"

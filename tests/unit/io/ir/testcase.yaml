@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (c) Centro de Inovacao EDGE 2026
+
+common:
+  platform_allow: native_sim
+  tags:
+    - interface
+    - io
+    - ir
+tests:
+  interface.io.ir:
+    extra_args: []
+  interface.io.ir.active_low:
+    extra_args:
+      - EXTRA_DTC_OVERLAY_FILE=active_low.overlay
+  interface.io.ir.no_settle:
+    extra_configs:
+      - CONFIG_ZBOOK_INTERFACE_IO_IR_SETTLE_MS=0
