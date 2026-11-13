@@ -12,7 +12,7 @@
 
 #include "actuators/zbook_buzzer.h"
 
-#ifdef CONFIG_ZBOOK_BUZZER
+#ifdef CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER
 
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/pwm.h>
@@ -20,7 +20,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/clock.h>
 
-LOG_MODULE_REGISTER(zbook_buzzer, CONFIG_ZBOOK_BUZZER_LOG_LEVEL);
+LOG_MODULE_REGISTER(zbook_buzzer, CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_LOG_LEVEL);
 
 #define BUZZER_NODE                 DT_ALIAS(pwm_buzzer)
 #define BUZZER_DEFAULT_FREQUENCY_HZ (NSEC_PER_SEC / DT_PWMS_PERIOD(BUZZER_NODE))
@@ -28,7 +28,7 @@ LOG_MODULE_REGISTER(zbook_buzzer, CONFIG_ZBOOK_BUZZER_LOG_LEVEL);
 
 static const struct pwm_dt_spec buzzer_pwm = PWM_DT_SPEC_GET(BUZZER_NODE);
 
-struct {
+static struct {
 	bool buzzer_ready;
 	bool buzzer_playing;
 	uint32_t buzzer_frequency_hz;
@@ -42,7 +42,8 @@ static int buzzer_apply(void)
 {
 	uint32_t period_ns = NSEC_PER_SEC / self.buzzer_frequency_hz;
 	uint32_t duty_percent =
-		self.buzzer_playing ? (self.buzzer_volume_percent * BUZZER_MAX_DUTY_PERCENT) / 100U : 0U;
+		self.buzzer_playing ? (self.buzzer_volume_percent * BUZZER_MAX_DUTY_PERCENT) / 100U
+				    : 0U;
 	uint32_t pulse_ns = ((uint64_t)period_ns * duty_percent) / 100U;
 
 	return pwm_set(buzzer_pwm.dev, buzzer_pwm.channel, period_ns, pulse_ns, buzzer_pwm.flags);
@@ -135,7 +136,8 @@ int zbook_buzzer_beep_ms(uint32_t duration_ms)
 
 int zbook_buzzer_beep_repeated(uint32_t times)
 {
-	return zbook_buzzer_beep_full(CONFIG_ZBOOK_BUZZER_BEEP_DURATION_NORMAL_MS, times);
+	return zbook_buzzer_beep_full(
+		CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_NORMAL_MS, times);
 }
 
 int zbook_buzzer_beep(enum zbook_buzzer_beep_duration duration)
@@ -144,13 +146,13 @@ int zbook_buzzer_beep(enum zbook_buzzer_beep_duration duration)
 
 	switch (duration) {
 	case ZBOOK_BUZZER_BEEP_DURATION_SHORT:
-		duration_ms = CONFIG_ZBOOK_BUZZER_BEEP_DURATION_SHORT_MS;
+		duration_ms = CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_SHORT_MS;
 		break;
 	case ZBOOK_BUZZER_BEEP_DURATION_NORMAL:
-		duration_ms = CONFIG_ZBOOK_BUZZER_BEEP_DURATION_NORMAL_MS;
+		duration_ms = CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_NORMAL_MS;
 		break;
 	case ZBOOK_BUZZER_BEEP_DURATION_LONG:
-		duration_ms = CONFIG_ZBOOK_BUZZER_BEEP_DURATION_LONG_MS;
+		duration_ms = CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_LONG_MS;
 		break;
 	default:
 		LOG_ERR("invalid zbook_buzzer beep duration: %d", duration);
@@ -182,4 +184,4 @@ int zbook_buzzer_beep_full(uint32_t duration_ms, uint32_t times)
 	return 0;
 }
 
-#endif /* CONFIG_ZBOOK_BUZZER */
+#endif /* CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER */

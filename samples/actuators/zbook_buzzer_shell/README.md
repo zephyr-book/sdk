@@ -46,8 +46,8 @@ itself (the buzzer is passive). Both take effect immediately whether the buzzer 
 
 `buzzer beep <duration_ms>` blocks the shell for the duration of the beep, at the last configured
 frequency/volume. `buzzer beep_repeated <times>` beeps `times` times at the
-`CONFIG_ZBOOK_BUZZER_BEEP_DURATION_NORMAL_MS` preset (150ms by default). `buzzer beep_preset
-<short|normal|long>` beeps once at one of the three `CONFIG_ZBOOK_BUZZER_BEEP_DURATION_*_MS`
+`CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_NORMAL_MS` preset (150ms by default). `buzzer beep_preset
+<short|normal|long>` beeps once at one of the three `CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_DURATION_*_MS`
 presets (50/150/400ms by default, tunable via menuconfig). `buzzer beep_full <duration_ms>
 <times>` is the general form both of those build on: `times` beeps of `duration_ms` each, with a
 `duration_ms` silent gap between beeps (none after the last). `buzzer music` plays "Happy
