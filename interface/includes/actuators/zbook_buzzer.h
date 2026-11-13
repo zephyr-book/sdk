@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 
-/** @brief Preset beep durations, in CONFIG_ZBOOK_BUZZER_BEEP_<name>_MS. */
+/** @brief Preset beep durations. */
 enum zbook_buzzer_beep_duration {
 	ZBOOK_BUZZER_BEEP_DURATION_SHORT,  /**< Short beep duration */
 	ZBOOK_BUZZER_BEEP_DURATION_NORMAL, /**< Normal beep duration */
@@ -63,11 +63,11 @@ int zbook_buzzer_set_volume(uint8_t percent);
 /**
  * @brief Set the zbook buzzer's tone.
  *
- * @param frequency_hz Tone frequency in Hz. Must be nonzero.
+ * @param frequency_hz Tone frequency in Hz, 1 to 1000000000.
  *
  * @retval 0 Success.
  * @retval -ENODEV zbook_buzzer_init() has not been called successfully yet.
- * @retval -EINVAL @p frequency_hz is zero.
+ * @retval -EINVAL @p frequency_hz is zero or above 1 GHz.
  */
 int zbook_buzzer_set_frequency(uint32_t frequency_hz);
 
@@ -84,7 +84,7 @@ int zbook_buzzer_set_frequency(uint32_t frequency_hz);
 int zbook_buzzer_beep_ms(uint32_t duration_ms);
 
 /**
- * @brief Beep @p times times, at the CONFIG_ZBOOK_BUZZER_BEEP_NORMAL_MS
+ * @brief Beep @p times times, at the CONFIG_ZBOOK_INTERFACE_ACTUATOR_BUZZER_BEEP_NORMAL_MS
  * duration.
  *
  * Blocks for the duration of the whole sequence -- see zbook_buzzer_beep_full().
