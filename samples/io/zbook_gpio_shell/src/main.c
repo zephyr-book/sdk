@@ -6,7 +6,7 @@
  * addressed by IO name ("io01"/"io39"/"io45"/"io46").
  *
  * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
- * @version 0.2
+ * @version 0.1
  * @date 06/11/26
  *
  * @copyright Copyright (c) 2026
@@ -225,11 +225,17 @@ static int cmd_gpio_read(const struct shell *sh, size_t argc, char **argv)
 static void watch_cb(enum zbook_pin_header pin, void *user_data)
 {
 	int io = POINTER_TO_INT(user_data);
-	uint8_t level = 0;
+	uint8_t level;
+	int ret = zbook_pin_read(ios[io].handle, &level, 1);
 
-	zbook_pin_read(ios[io].handle, &level, 1);
+	if (ret != 0) {
+		printk("\"%s\" (GPIO%u) edge, read failed: %d\n", ios[io].name, pin, ret);
+		return;
+	}
+
 	printk("\"%s\" (GPIO%u) edge, level %u\n", ios[io].name, pin, level);
 }
+
 
 static int cmd_gpio_watch(const struct shell *sh, size_t argc, char **argv)
 {

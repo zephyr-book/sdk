@@ -8,7 +8,6 @@
 	zbook_gpio_channels: zbook-gpio-channels {
 		compatible = "edge,gpio-inputs";
 
-		/* Out of order and with a disabled child on purpose: channels are mapped by label. */
 		gpio_io45: gpio-io45 {
 			gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
 		};

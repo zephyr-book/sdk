@@ -101,7 +101,7 @@ enum zbook_pin_header_pwm_polarity {
  * @brief Edge callback of a GPIO input header pin.
  *
  * @param pin Header pin that saw the edge.
- * @param user_data Value given in struct zbook_pin_cfg_gpio.
+ * @param[in] user_data Value given in struct zbook_pin_cfg_gpio.
  */
 typedef void (*zbook_pin_gpio_cb_t)(enum zbook_pin_header pin, void *user_data);
 

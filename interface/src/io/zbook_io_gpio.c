@@ -3,7 +3,7 @@
  *
  * @brief GPIO backend of the Zbook header pins (see zbook_io_gpio.h).
  * @author José Félix de Oliveira Neto (josefelix.neto@edge.ufal.br)
- * @version 0.2
+ * @version 0.1
  * @date 06/11/26
  *
  * @copyright Copyright (c) 2026

@@ -1,17 +1,6 @@
 /*
  * interface/'s own devicetree extension, applied via the "zbook-sdk" snippet
  * (-S zbook-sdk) -- consumers never write devicetree themselves.
- *
- * zbook_gpio_channels uses the board's driverless "edge,gpio-inputs"
- * binding only to get typed "gpios" children for GPIO_DT_SPEC_GET in
- * zbook_io_gpio.c. Not "gpio-keys": input_gpio_keys would bind to it as soon
- * as CONFIG_INPUT is on (e.g. by the button interface). The rp2350 GPIO
- * driver re-muxes a pin to SIO on every gpio_pin_configure(), so the GPIO
- * backend reclaims the pin regardless of what function used it last.
- *
- * zbook_io_gpio.c maps each "enum zbook_pin_header" value to its channel by
- * node label (gpio_io01, gpio_io39, gpio_io45, gpio_io46), so the order of the
- * children does not matter and a disabled child only takes its own pin out.
  */
 #include <zephyr/dt-bindings/gpio/gpio.h>
 
