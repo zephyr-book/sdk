@@ -70,6 +70,25 @@ struct zbook_pin {
 	})
 
 /**
+ * @brief Configures a header pin as a GPIO input that calls back on an edge.
+ *
+ * @param _pull Pull configuration for the GPIO pin (@ref enum zbook_pin_header_pull)
+ * @param _edge Edge that fires the callback (@ref enum zbook_pin_header_interrupt)
+ * @param _cb Callback (@ref zbook_pin_gpio_cb_t)
+ * @param _user_data Passed through to the callback
+ */
+#define ZBOOK_PIN_CFG_GPIO_IN_IRQ(_pull, _edge, _cb, _user_data)                                   \
+	((struct zbook_pin_header_config){                                                         \
+		.function = ZBOOK_PIN_HEADER_FUNCTION_GPIO,                                        \
+		.cfg.gpio = {.direction = ZBOOK_PIN_HEADER_DIRECTION_INPUT,                        \
+			     .pull = (_pull),                                                      \
+			     .state = ZBOOK_PIN_HEADER_STATE_LOW,                                  \
+			     .interrupt = (_edge),                                                 \
+			     .callback = (_cb),                                                    \
+			     .user_data = (_user_data)},                                           \
+	})
+
+/**
  * @brief Configures a header pin for UART transmission.
  *
  * @param _baud Baud rate for the UART communication.

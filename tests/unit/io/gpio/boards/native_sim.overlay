@@ -1,0 +1,28 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+&gpio0 {
+	ngpios = <4>;
+};
+
+/ {
+	zbook_gpio_channels: zbook-gpio-channels {
+		compatible = "edge,gpio-inputs";
+
+		gpio_io45: gpio-io45 {
+			gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+		};
+
+		gpio_io01: gpio-io01 {
+			gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
+		};
+
+		gpio_io39: gpio-io39 {
+			gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		gpio_io46: gpio-io46 {
+			status = "disabled";
+			gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};

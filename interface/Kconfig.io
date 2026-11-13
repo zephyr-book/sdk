@@ -42,6 +42,20 @@ menu "ZBook Interface - I/O"
     config ZBOOK_INTERFACE_IO_GPIO
       bool "Enable ZBook Interface I/O - GPIO"
       default y
+      select GPIO
+      help
+        GPIO backend of the header pin factory: input/output, pull,
+        open-drain and debounced edge interrupts. Pins are taken from the
+        "zbook_gpio_channels" node shipped by the "zbook-sdk" snippet.
+
+    config ZBOOK_INTERFACE_IO_GPIO_DEBOUNCE_MS
+      int "GPIO edge interrupt debounce interval in milliseconds"
+      default 30
+      depends on ZBOOK_INTERFACE_IO_GPIO
+      help
+        After an edge, the pin's interrupt stays masked for this long and
+        the callback runs once at the end of the interval. 0 runs the
+        callback as soon as possible, still from the system workqueue.
 
   endmenu
 
@@ -79,3 +93,10 @@ if ZBOOK_INTERFACE_IO_BTN
 	module-str = btn
 	source "subsys/logging/Kconfig.template.log_config"
 endif
+
+if ZBOOK_INTERFACE_IO_GPIO
+  module = ZBOOK_INTERFACE_IO_GPIO
+  module-str = zbook io gpio
+  source "subsys/logging/Kconfig.template.log_config"
+endif
+      

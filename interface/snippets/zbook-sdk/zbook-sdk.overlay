@@ -1,0 +1,31 @@
+/*
+ * interface/'s own devicetree extension, applied via the "zbook-sdk" snippet
+ * (-S zbook-sdk) -- consumers never write devicetree themselves.
+ */
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	zbook_gpio_channels: zbook-gpio-channels {
+		compatible = "edge,gpio-inputs";
+
+		gpio_io01: gpio-io01 {
+			label = "IO01";
+			gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>; /* GPIO01 */
+		};
+
+		gpio_io39: gpio-io39 {
+			label = "IO39";
+			gpios = <&gpio0_hi 7 GPIO_ACTIVE_HIGH>; /* GPIO39 */
+		};
+
+		gpio_io45: gpio-io45 {
+			label = "IO45";
+			gpios = <&gpio0_hi 13 GPIO_ACTIVE_HIGH>; /* GPIO45 */
+		};
+
+		gpio_io46: gpio-io46 {
+			label = "IO46";
+			gpios = <&gpio0_hi 14 GPIO_ACTIVE_HIGH>; /* GPIO46 */
+		};
+	};
+};

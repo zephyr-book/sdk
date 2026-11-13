@@ -38,15 +38,19 @@ struct zbook_gpio_ctx {
  * @brief Configures a header pin as a GPIO.
  *
  * @param[in] pin Pin handle; its gpio field is the header pin GPIO number.
- * @param[in] cfg Function config; only cfg->cfg.gpio is used. Direction, pull and state.
+ * @param[in] cfg Function config; only cfg->cfg.gpio is used. Direction, pull, state and,
+ *                for inputs, the edge interrupt and its callback.
  *
  * @retval 0 Success: the pin is configured as a GPIO.
- * @retval -EINVAL Error: @p pin or @p cfg is NULL, or @p cfg has an out-of-range field.
+ * @retval -EINVAL Error: @p pin or @p cfg is NULL, @p cfg has an out-of-range field, or an
+ *         interrupt is requested on an output or without a callback.
+ * @retval -ENODEV Error: the pin is not wired up in devicetree or its device is not ready.
  */
 int zbook_io_gpio_init(struct zbook_pin *pin, const struct zbook_pin_header_config *cfg);
 
 /**
- * @brief Returns the pin to an unused (input, no pull, no function) state.
+ * @brief Disables the pin's interrupt, if any, and returns the pin to an unused
+ * (input, no pull, no function) state.
  *
  * @param[in] pin Pin handle; its gpio field is the header pin GPIO number.
  */
